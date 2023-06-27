@@ -50,7 +50,7 @@ def is_valid_expression(expr):
 def init_global_equation():
     global global_equation
     headers = {}
-    aio_url = "https://io.adafruit.com/api/v2/DDesmond/feeds/equation"
+    aio_url = ""
     x = requests.get(url=aio_url, headers=headers, verify=False)
     data = x.json()
     global_equation = data["last_value"]
