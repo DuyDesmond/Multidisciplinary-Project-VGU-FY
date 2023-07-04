@@ -9,6 +9,7 @@ except:
     print("Can not open the port")
 
 def sendCommand(cmd):
+    global ser
     ser.write(cmd.encode())
     
 while True: 
