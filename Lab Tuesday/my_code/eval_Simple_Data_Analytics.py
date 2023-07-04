@@ -50,7 +50,7 @@ def is_valid_expression(expr):
 def init_global_equation():
     global global_equation
     headers = {}
-    aio_url = ""
+    aio_url = "" #use api of the "equation" feed
     x = requests.get(url=aio_url, headers=headers, verify=False)
     data = x.json()
     global_equation = data["last_value"]
