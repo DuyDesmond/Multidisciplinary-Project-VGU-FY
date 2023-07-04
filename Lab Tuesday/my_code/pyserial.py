@@ -11,8 +11,39 @@ except:
 def sendCommand(cmd):
     global ser
     ser.write(cmd.encode())
-    
+
+mess = ""
+def processData(data):
+    data = data.replace("!", "")
+    data = data.replace("#", "")
+    splitData = data.split(":")
+    print(splitData)
+
+def readSerial():
+    bytesToRead = ser.inWaiting()
+    if (bytesToRead > 0):
+        global mess
+        mess = mess + ser.read(bytesToRead).decode("UTF-8")
+        while ("#" in mess) and ("!" in mess):
+            start = mess.find("!")
+            end = mess.find("#")
+            processData(mess[start:end + 1])
+            if (end == len(mess)):
+                mess = ""
+            else:
+                mess = mess[end+1:]
+
+def requestData(cmd):
+    sendCommand(cmd)
+    time.sleep(1)
+    readSerial()
+
 while True: 
+    # requestData("0")
+    # time.sleep(2)
+    # requestData("1")
+    # time.sleep(2)  
+    
     print("Testing commands")
     sendCommand("2")
     time.sleep(2)
