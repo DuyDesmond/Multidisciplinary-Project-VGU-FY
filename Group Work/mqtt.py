@@ -62,6 +62,7 @@ def connected(client):
     client.subscribe("reservoir")
     client.subscribe("tempsensor")
     client.subscribe("schedule")
+    client.subscribe("plant_detect")
     print("Server connected ...")
 
 def subscribe(client , userdata , mid , granted_qos):
@@ -105,10 +106,12 @@ reservoir = 100
 malfunctionNotified = False
 is_daytime = True
 is_rainy = False
+plant_detected = False
 
 while True:
     # Call plant_detector function to capture images and make predictions
-    plant_detector()
+    plantDetected = plant_detector()
+    client.publish("plant_detector", plantDetected)
     time.sleep(1)
     
     # Reservoir amount
@@ -120,8 +123,6 @@ while True:
     client.publish("lightsensor", sun)
     client.publish("rainsensor", rain)
     time.sleep(3)
-
-    plantDetected = plant_detector()
     
     #Check if sensors work
     
