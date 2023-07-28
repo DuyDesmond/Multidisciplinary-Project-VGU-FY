@@ -5,10 +5,10 @@ import numpy as np
 import cv2
 
 # Load the model
-model = load_model("keras_Model.h5", compile=False)
+model = load_model("Plant_Detect/keras_Model.h5", compile=False)
 
 # Load the labels
-class_names = open("labels.txt", "r").readlines()
+class_names = open("Plant_Detect/labels.txt", "r").readlines()
 
 camera = cv2.VideoCapture(0)
 
@@ -28,11 +28,11 @@ def plant_detector():
     index = np.argmax(prediction)
     class_name = class_names[index]
     confidence_score = prediction[0][index]
-    
     print("Class:", class_name[2:], end="")
     print("Confidence Score:", str(np.round(confidence_score * 100))[:-2], "%")
     
-while True:
-    plant_detector()
-    time.sleep(1)
+    return True if class_name[2:] == "Plant" and np.round(confidence_score * 100)[:-2] > 60 else False
+    
+    
+    
     
