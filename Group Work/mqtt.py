@@ -106,11 +106,11 @@ reservoir = 100
 malfunctionNotified = False
 is_daytime = True
 is_rainy = False
-plant_detected = False
+plantDetected = plant_detector()
 
 while True:
     # Call plant_detector function to capture images and make predictions
-    plantDetected = plant_detector()
+    plant_detector()
     client.publish("plant_detector", plantDetected)
     time.sleep(1)
     
